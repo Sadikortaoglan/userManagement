@@ -1,18 +1,11 @@
-package com.userManagement.models;
-
-import jakarta.persistence.*;
+package com.userManagement.data;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "users")
-public class UserModel implements Serializable {
+public class UserData implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String userName;
     private String lastName;
@@ -20,7 +13,14 @@ public class UserModel implements Serializable {
     private String phone;
     private String passwd;
     private String birthDate;
-    private boolean isDeleted;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;
@@ -68,21 +68,5 @@ public class UserModel implements Serializable {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }
