@@ -11,7 +11,13 @@ target/
 *.iws
 *.iml
 *.ipr
+# Ignore IntelliJ IDEA configuration files
+.idea/hybrisProjectSettings.xml
+.idea
 
+
+# Ignore the LICENSE file
+LICENSE
 ### Eclipse ###
 .apt_generated
 .classpath
