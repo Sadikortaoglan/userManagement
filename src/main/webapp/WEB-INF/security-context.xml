@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.userManagement"/>
+
+    <security:authentication-manager id="customAuthenticationManager">
+        <security:authentication-provider user-service-ref="userDetailServiceImpl"/>
+    </security:authentication-manager>
+    <bean id="userDetailServiceImpl" class="com.userManagement.services.impl.UserServiceImpl">
+
+    </bean>
+
+    <security:http use-expressions="true">
+        <security:form-login login-page='/login'
+                             login-processing-url="/spring_security_check"
+                             authentication-failure-url="/login?error=true"
+                             authentication-success-handler-ref="customAuthenticationSuccessHandler"
+                             authentication-failure-handler-ref="customAuthenticationFailureHandler"
+                             username-parameter="username"
+                             password-parameter="password"/>
+        <security:logout
+                logout-url="/logout"
+                logout-success-url="/login"
+                delete-cookies="JSESSIONID"/>
+
+        <security:intercept-url pattern="/login" access="permitAll()"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll()"/>
+        <security:intercept-url pattern="/**" access="permitAll()"/>
+        <security:access-denied-handler error-page="/login"/>
+    </security:http>
+
+    <bean id="customAuthenticationSuccessHandler"
+          class="com.userManagement.security.handler.CustomAuthenticationSuccessHandler">
+        <property name="targetUrl" value="/user"/>
+
+    </bean>
+
+    <bean id="customAuthenticationFailureHandler"
+          class="com.userManagement.security.handler.CustomAuthenticationFailureHandler">
+        <property name="failureUrl" value="/login?error=true"/>
+    </bean>
+
+<!--    <bean id="customAuthenticationProvider"-->
+<!--          class="com.userManagement.security.provider.CustomAuthenticationProvider">-->
+<!--    </bean>-->
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    </bean>
+</beans>

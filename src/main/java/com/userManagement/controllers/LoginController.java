@@ -2,17 +2,19 @@ package com.userManagement.controllers;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/login")
 @Scope("session")
 public class LoginController {
-    @GetMapping
-    public String getLoginPage(Model model) {
-        model.addAttribute("title", "Giris Yap");
-        return "login";
+    protected static final String VIEW_NAME_LOGIN_PAGE = "login";
+
+    @GetMapping()
+    public String showLoginPage() {
+        //LOGGER.debug("Rendering login page.");
+        return VIEW_NAME_LOGIN_PAGE;
     }
 }

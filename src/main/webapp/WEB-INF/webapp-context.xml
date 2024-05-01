@@ -10,7 +10,12 @@
              http://www.springframework.org/schema/mvc
              https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-
+    <context:annotation-config/>
+    <context:component-scan base-package="com.userManagement"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <import resource="security-context.xml" />
+    <mvc:annotation-driven />
+    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3308/userManagement"/>
@@ -39,11 +44,7 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-    <mvc:annotation-driven />
-    <context:annotation-config/>
-    <context:component-scan base-package="com.userManagement"/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-<!--    <context:property-placeholder location="/resources/application.properties"/>-->
+    <!--    <context:property-placeholder location="/resources/application.properties"/>-->
 
 </beans>

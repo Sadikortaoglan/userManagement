@@ -8,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/user")
 @Scope("session")
 public class UserController {
     private static final String REDIRECT_PREFIX = "redirect:/user";
@@ -24,7 +22,7 @@ public class UserController {
     public String getUsersPage(Model model) {
         model.addAttribute("title", "title");
         model.addAttribute("users", "user");
-        return "registerUser";
+        return "login";
     }
     @PostMapping(value = "/registerUser")
     public String saveUser(@ModelAttribute UserData userData, BindingResult result, Model model) {

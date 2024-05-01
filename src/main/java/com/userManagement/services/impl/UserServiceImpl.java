@@ -5,14 +5,15 @@ import com.userManagement.data.UserData;
 import com.userManagement.models.UserModel;
 import com.userManagement.services.UserService;
 import jakarta.annotation.Resource;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserDetailsService {
     @Resource
     private UserDao userDao;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+/*
     @Override
     public boolean deleteUser(long userId) {
         UserModel existingUser = userDao.findById(userId);
@@ -43,11 +45,17 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllActiveUsers();
     }
 
+    @Override
+    public UserDetails getByUserName(String parameter) {
+        return null;
+    }
+
 
     @Override
     public UserModel findById(Long id) {
         return userDao.findById(id);
     }
+*/
 
     private UserModel convertToUser(UserData userDto) {
         UserModel user = new UserModel();
@@ -62,5 +70,10 @@ public class UserServiceImpl implements UserService {
         userData.setPasswd(user.getPasswd());
         userData.setEmail(user.getEmail());
         return userData;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
