@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class UserController {
     @PostMapping(value = "/registerUser")
     public String saveUser(@ModelAttribute UserData userData, BindingResult result, Model model) {
         boolean hasErrors = result.hasErrors();
-        boolean savedSuccessfully = !hasErrors && userService.registerUser(userData);
+        boolean savedSuccessfully = !hasErrors && userService.save(userData);
 
         if (savedSuccessfully) {
             model.addAttribute("successMessage", "Kayıt başarıyla oluşturuldu.");
@@ -46,7 +43,22 @@ public class UserController {
         model.addAttribute("getAllUser",userService.getAllActiveUsers());
         return "users";
     }
-
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam long userId, Model model) {
+        boolean deleted = userService.deleteUser(userId);
+        model.addAttribute("deleted", deleted);
+        return "deleteUserResult";
+    }
+    @PostMapping("/users/{id}/update")
+    public String updateUser(@ModelAttribute("user") UserData userData) {
+        boolean updated = userService.save(userData);
+        if (updated) {
+            return "redirect:/users/" + userData.getId();
+        } else {
+            //TODO entegrasyonu yaptıktan sonra log yazmayı unutma
+            return "errorPage";
+        }
+    }
 
     private String getRedirectUrl(boolean hasError, String userId) {
         String redirectUrl = REDIRECT_PREFIX;

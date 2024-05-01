@@ -16,24 +16,26 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    public boolean registerUser(UserData userDto) {
+    public boolean save(UserData userDto) {
         UserModel existingUser = userDao.findById(Long.parseLong(userDto.getId()));
         if (existingUser != null) {
             return false;
         } else {
             UserModel user = convertToUser(userDto);
-            return userDao.registerUser(user);
+            return userDao.save(user);
         }
     }
 
     @Override
     public boolean deleteUser(long userId) {
         UserModel existingUser = userDao.findById(userId);
-        if (existingUser != null) {
-            existingUser.setDeleted(false);
-            return userDao.registerUser(existingUser);
+        if (existingUser != null && existingUser.isDeleted()) {
+            return false;
+        } else if (existingUser != null) {
+            existingUser.setDeleted(true);
+            return userDao.save(existingUser);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + userId);
+            return false;
         }
     }
     @Override

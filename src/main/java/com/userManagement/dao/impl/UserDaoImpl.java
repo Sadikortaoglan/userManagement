@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public boolean registerUser(UserModel userModel) {
+    public boolean save(UserModel userModel) {
         try {
             Session session = sessionFactory.getCurrentSession();
             session.saveOrUpdate(userModel);
