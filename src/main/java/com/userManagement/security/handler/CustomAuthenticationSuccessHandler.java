@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -17,17 +18,20 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private static final String USERNAME = "username";
     private String targetUrl;
 
+    @Resource
+    private RedirectStrategy redirectStrategy;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-            request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME", request.getParameter(USERNAME));
-            session.setAttribute(USERNAME, authentication.getName());
-            session.setAttribute("authorities", authentication.getAuthorities());
-            session.setAttribute("currentUser", "");
-        }
-        response.sendRedirect(getTargetUrl());
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+//            request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME", request.getParameter(USERNAME));
+//            session.setAttribute(USERNAME, authentication.getName());
+//            session.setAttribute("authorities", authentication.getAuthorities());
+//            session.setAttribute("currentUser", "");
+//        }
+        redirectStrategy.sendRedirect(request, response, getTargetUrl());
     }
 
     public String getTargetUrl() {

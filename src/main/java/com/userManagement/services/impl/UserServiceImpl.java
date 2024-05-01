@@ -6,14 +6,13 @@ import com.userManagement.models.UserModel;
 import com.userManagement.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
@@ -22,12 +21,11 @@ public class UserServiceImpl implements UserDetailsService {
         if (existingUser != null) {
             return false;
         } else {
-            UserModel user = convertToUser(userDto);
-            return userDao.save(user);
+            //UserModel user = convertUsersToModels(userDto);
+            return false;
         }
     }
 
-/*
     @Override
     public boolean deleteUser(long userId) {
         UserModel existingUser = userDao.findById(userId);
@@ -41,8 +39,9 @@ public class UserServiceImpl implements UserDetailsService {
         }
     }
     @Override
-    public List<UserModel> getAllActiveUsers() {
-        return userDao.getAllActiveUsers();
+    public List<UserData> getAllActiveUsers() {
+        List<UserModel> users = userDao.getAllActiveUsers();
+        return convertUsersToModels(users);
     }
 
     @Override
@@ -55,25 +54,21 @@ public class UserServiceImpl implements UserDetailsService {
     public UserModel findById(Long id) {
         return userDao.findById(id);
     }
-*/
 
-    private UserModel convertToUser(UserData userDto) {
-        UserModel user = new UserModel();
-        user.setUserName(userDto.getUserName());
-        user.setPasswd(userDto.getPasswd());
-        user.setEmail(userDto.getEmail());
-        return user;
+    public List<UserData> convertUsersToModels(List<UserModel> userModelList) {
+        List<UserData> userDataList = new ArrayList<>();
+        for (UserModel user : userModelList) {
+            UserData userData = convertToUserData(user);
+            userDataList.add(userData);
+        }
+        return userDataList;
     }
-    private UserData convertToUserData(UserModel user) {
+
+    private UserData convertToUserData(UserModel userModel) {
         UserData userData = new UserData();
-        userData.setUserName(user.getUserName());
-        userData.setPasswd(user.getPasswd());
-        userData.setEmail(user.getEmail());
+        userData.setUserName(userModel.getUserName());
+        userData.setPasswd(userModel.getPasswd());
+        userData.setEmail(userModel.getEmail());
         return userData;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

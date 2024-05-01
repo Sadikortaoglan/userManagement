@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -43,17 +44,17 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
     }
-
-    @Override
     public List<UserModel> getAllActiveUsers() {
-        try{
+        try {
             Session session = sessionFactory.getCurrentSession();
-            return session.createQuery("FROM UserModel WHERE isDeleted = true", UserModel.class)
-                    .getResultList();
-        }catch (HibernateException e){
-            e.printStackTrace();
-            return null;
+            Query<UserModel> query = session.createQuery("FROM UserModel WHERE isDeleted = :userDelete", UserModel.class);
+            query.setParameter("userDelete", false);
+            List<UserModel> userList = query.getResultList();
+            return userList;
+        } catch (Exception e) {
+            //LOGGER.error("getUsersExp: ", e);
+            return Collections.emptyList();
         }
-
     }
+
 }

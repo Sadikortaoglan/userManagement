@@ -20,14 +20,14 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>WEB-INF/webapp-context.xml</param-value>
-  </context-param>
-  <context-param>
-    <param-name>tagpoolMaxSize</param-name>
-    <param-value>50</param-value>
-  </context-param>
+  <session-config>
+    <session-timeout>90</session-timeout>
+    <cookie-config>
+      <secure>false</secure>
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -36,6 +36,33 @@
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>WEB-INF/webapp-context.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>tagpoolMaxSize</param-name>
+    <param-value>50</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>PARAMETER_ENCODING</param-name>
+    <param-value>UTF-8</param-value>
+  </context-param>
+
+  <jsp-config>
+
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <scripting-invalid>false</scripting-invalid>
+    </jsp-property-group>
+    <jsp-property-group>
+      <url-pattern>*.tag</url-pattern>
+      <scripting-invalid>false</scripting-invalid>
+    </jsp-property-group>
+  </jsp-config>
 
 
 </web-app>

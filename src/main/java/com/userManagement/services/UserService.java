@@ -11,7 +11,7 @@ public interface UserService {
     boolean save(UserData user);
     boolean deleteUser(long userId);
     UserModel findById(Long id);
-    List<UserModel> getAllActiveUsers();
+    List<UserData> getAllActiveUsers();
 
 
     UserDetails getByUserName(String parameter);

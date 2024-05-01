@@ -13,8 +13,6 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.userManagement"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <import resource="security-context.xml" />
-    <mvc:annotation-driven />
     <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
@@ -24,19 +22,17 @@
     </bean>
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-    <property name="dataSource" ref="dataSource"/>
-    <property name="annotatedClasses">
-        <list>
-            <value>com.userManagement.models.UserModel</value>
-        </list>
-    </property>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.userManagement.models.UserModel</value>
+            </list>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-                <prop key="org.hibernate.envers.audit_table_prefix">ZZ_LOG_</prop>
-                <prop key="org.hibernate.envers.audit_table_suffix"/>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
     </bean>
@@ -44,7 +40,14 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <import resource="security-context.xml" />
 
+    <mvc:annotation-driven />
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <!--    <context:property-placeholder location="/resources/application.properties"/>-->
 
 </beans>

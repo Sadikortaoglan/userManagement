@@ -8,4 +8,5 @@
     <tags:registerUser/>
 </section>
 </body>
+<tags:footer/>
 </html>

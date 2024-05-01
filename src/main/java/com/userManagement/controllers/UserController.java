@@ -21,8 +21,8 @@ public class UserController {
     @GetMapping
     public String getUsersPage(Model model) {
         model.addAttribute("title", "title");
-        model.addAttribute("users", "user");
-        return "login";
+        model.addAttribute("userList", userService.getAllActiveUsers());
+        return "userList";
     }
     @PostMapping(value = "/registerUser")
     public String saveUser(@ModelAttribute UserData userData, BindingResult result, Model model) {
