@@ -15,9 +15,18 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>WEB-INF/webapp-context.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>tagpoolMaxSize</param-name>
+    <param-value>50</param-value>
+  </context-param>
+
 </web-app>

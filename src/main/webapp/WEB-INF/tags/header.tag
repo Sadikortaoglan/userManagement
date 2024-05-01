@@ -6,6 +6,7 @@
 <head>
     <title>Title</title>
     <tags:css />
+    <tags:js />
 </head>
 <body>
 
