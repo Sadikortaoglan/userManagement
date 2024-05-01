@@ -13,7 +13,7 @@ public class UserModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private String userName;
     private String lastName;
     private String email;
@@ -78,11 +78,11 @@ public class UserModel implements Serializable {
         isDeleted = deleted;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

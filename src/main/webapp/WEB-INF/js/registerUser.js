@@ -3,7 +3,7 @@ function registerUser() {
 
     $.ajax({
     type: "POST",
-    url: "/save",
+    url: "/registerUser",
     data: formData,
     success: function(response) {
         console.log("Success:", response);
