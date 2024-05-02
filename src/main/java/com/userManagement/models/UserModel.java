@@ -35,6 +35,9 @@ public class UserModel implements Serializable, UserDetails {
     public void addRole(UserRole role) {
         roles.add(role);
     }
+    public void removeRole(UserRole role) {
+        roles.remove(role);
+    }
 
     public String getUserName() {
         return userName;

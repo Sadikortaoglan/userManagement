@@ -18,12 +18,10 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Resource
     private RedirectStrategy redirectStrategy;
-    protected static final String STATUS_MESSAGE_AUTHENTICATION_FAILED = "Bad credentials";
 
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, STATUS_MESSAGE_AUTHENTICATION_FAILED);
         redirectStrategy.sendRedirect(request, response, getFailureUrl());
     }
 

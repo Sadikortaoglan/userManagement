@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserDao {
     boolean save(UserModel userModel);
 
-    UserModel findById(Long userId);
+    UserModel findById(String userId);
 
     List<UserModel> getAllActiveUsers();
     UserDetails getByUserName(String username);

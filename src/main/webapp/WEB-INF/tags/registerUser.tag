@@ -1,6 +1,7 @@
 <%@ tag body-content="empty" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <%@ tag description="Register User Form" pageEncoding="UTF-8"%>
 
@@ -10,47 +11,10 @@
 <%@ attribute name="phone"  type="java.lang.String" description="Phone" %>
 <%@ attribute name="passwd"  type="java.lang.String" description="Password" %>
 <%@ attribute name="birthDate"  type="java.lang.String" description="Birth Date" %>
-<head>
-    <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        input {
-            margin: 5px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-        }
-
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-    <script src="../js/registerUser.js"></script>
-</head>
+<tags:header/>
+<c:set var="registerUrl" value="/user/registerUser" />
 <div class="container">
-    <form id="registerForm">
+    <form id="registerForm" method="post" name="userForm" action="${registerUrl}">
         <label for="userName">User Name:</label>
         <input type="text" id="userName" name="userName" value="${userName}" placeholder="User Name" required>
 
@@ -69,7 +33,8 @@
         <label for="birthDate">Birth Date:</label>
         <input type="text" id="birthDate" name="birthDate" value="${birthDate}" placeholder="Birth Date" required>
 
-        <button type="button" onclick="registerUser()">Register</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn">Kaydet</button>
+
     </form>
 </div>
 

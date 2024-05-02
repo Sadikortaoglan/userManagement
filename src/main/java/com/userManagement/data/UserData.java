@@ -2,6 +2,7 @@ package com.userManagement.data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 public class UserData implements Serializable {
     @Serial
@@ -13,6 +14,24 @@ public class UserData implements Serializable {
     private String phone;
     private String passwd;
     private String birthDate;
+    private boolean admin;
+    private List<String> roles;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public String getId() {
         return id;

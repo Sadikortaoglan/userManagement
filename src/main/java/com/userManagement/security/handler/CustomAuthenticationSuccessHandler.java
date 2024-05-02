@@ -15,9 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import java.io.IOException;
 
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private static final String USERNAME = "username";
     private String targetUrl;
-
     @Resource
     private RedirectStrategy redirectStrategy;
 

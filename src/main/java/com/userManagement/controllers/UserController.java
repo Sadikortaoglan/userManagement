@@ -1,9 +1,15 @@
 package com.userManagement.controllers;
 
+import com.userManagement.data.ResultData;
 import com.userManagement.data.UserData;
 import com.userManagement.services.UserService;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,8 +21,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @Scope("session")
 public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
     private static final String REDIRECT_PREFIX = "redirect:/user";
-    private static final String REDIRECT_SAVE = "/save";
+    private static final String REDIRECT_SAVE = "/registerUser";
     @Resource
     UserService userService;
     @GetMapping
@@ -25,43 +33,48 @@ public class UserController {
         model.addAttribute("userList", userService.getAllActiveUsers());
         return "userList";
     }
-    @RequestMapping(value = { "/registerUser" }, method = RequestMethod.GET)
+    @RequestMapping(value = "/registerUser")
+    @GetMapping
     public String newUser(ModelMap model) {
         UserData user = new UserData();
         model.addAttribute("user", user);
         return "registerUser";
     }
-    @PostMapping(value = "/registerUser")
+    @PostMapping(value = "/registerUser",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public String saveUser(@ModelAttribute UserData userData, BindingResult result, Model model) {
         boolean hasErrors = result.hasErrors();
-        boolean savedSuccessfully = !hasErrors && userService.save(userData);
+        boolean savedSuccessfully = !hasErrors && userService.saveUser(userData);
 
         if (savedSuccessfully) {
             model.addAttribute("successMessage", "Kayıt başarıyla oluşturuldu.");
+        } else {
+            model.addAttribute("error", true);
         }
-        model.addAttribute("error", hasErrors || !savedSuccessfully);
 
         return getRedirectUrl(hasErrors || !savedSuccessfully, userData.getId());
     }
-    @GetMapping("users")
-    public String  getAllActiveUsers(Model model){
-        model.addAttribute("getAllUser",userService.getAllActiveUsers());
-        return "users";
-    }
-    @PostMapping("/deleteUser")
-    public String deleteUser(@RequestParam long userId, Model model) {
-        boolean deleted = userService.deleteUser(userId);
-        model.addAttribute("deleted", deleted);
-        return "deleteUserResult";
-    }
-    @PostMapping("/users/{id}/update")
-    public String updateUser(@ModelAttribute("user") UserData userData) {
-        boolean updated = userService.save(userData);
-        if (updated) {
-            return "redirect:/users/" + userData.getId();
+    @PostMapping(value = "/deleteUser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResultData deleteUser(@PathVariable String id) {
+        ResultData result = new ResultData();
+
+        boolean deleted = userService.deleteUser(id);
+
+        if (deleted) {
+            result.setMessage("Kullanıcı başarıyla silindi.");
         } else {
-            //TODO entegrasyonu yaptıktan sonra log yazmayı unutma
-            return "errorPage";
+            result.setMessage("Kullanıcı silinirken bir hata oluştu.");
+        }
+
+        return result;
+    }
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<UserData> getUserById(@PathVariable String id) {
+        UserData user = userService.findById(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

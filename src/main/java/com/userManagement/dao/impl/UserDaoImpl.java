@@ -8,6 +8,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,8 @@ import java.util.List;
 @Transactional
 @Repository
 public class UserDaoImpl implements UserDao {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
+
     @Resource
     private SessionFactory sessionFactory;
 
@@ -28,20 +32,20 @@ public class UserDaoImpl implements UserDao {
             session.saveOrUpdate(userModel);
             return true;
         } catch (Exception e) {
+            LOGGER.error("save",e);
             return false;
         }
     }
 
     @Override
-    public UserModel findById(Long id) {
+    public UserModel findById(String id) {
         try {
             Session session = sessionFactory.getCurrentSession();
             Query<UserModel> query = session.createQuery("FROM UserModel WHERE id = :userId", UserModel.class);
             query.setParameter("userId", id);
             return query.uniqueResult();
         } catch (HibernateException e) {
-            //TODO Loglama yap burada
-            e.printStackTrace();
+            LOGGER.error("findById",e);
             return null;
         }
     }
@@ -53,7 +57,7 @@ public class UserDaoImpl implements UserDao {
             List<UserModel> userList = query.getResultList();
             return userList;
         } catch (Exception e) {
-            //LOGGER.error("getUsersExp: ", e);
+            LOGGER.error("getAllActiveUsers",e);
             return Collections.emptyList();
         }
     }
@@ -65,7 +69,7 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("username", username);
             return query.uniqueResult();
         } catch (Exception e) {
-            // Log the exception or handle it according to your application's requirements
+            LOGGER.error("getByUserName",e);
             return null;
         }
     }
