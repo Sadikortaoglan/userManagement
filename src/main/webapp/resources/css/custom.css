@@ -1,109 +1,24 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-input {
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
-}
-
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: #eff3f8; !important;
 }
-
-.login-container {
-    width: 300px;
-    margin: 100px auto;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Formu tam ortala */
+.container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
 }
-
-.login-container h2 {
-    margin-bottom: 20px;
+.content {
+    width: 50%;
+    height: 50%;
 }
-
-.login-container form {
-    margin-top: 20px;
+.p-100{
+    padding: 100px;
 }
-
-.login-container input[type="text"],
-.login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    box-sizing: border-box;
+.zoomUser{
+    zoom: 5;
 }
-
-.login-container input[type="submit"] {
-    width: 100%;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.login-container input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-.login-container .error-message {
-    color: #ff0000;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.login-container:before {
-    content: "";
-    display: block;
-    height: 40px;
-}
-
-.login-container:after {
-    content: "Lütfen Giriş Yapınız";
-    display: block;
-    margin-top: 20px;
-    font-weight: bold;
-    font-size: 18px;
-}
-.login-container h2 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 28px;
+#registerForm{
+    width: 100% !important;
 }
 .navbar {
     background-color: #333;
@@ -113,70 +28,51 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
-.navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-.navbar ul li {
-    margin-right: 10px;
-}
-
-.navbar ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.navbar ul li a:hover {
-    text-decoration: underline;
-}
-.button {
-    display: inline-block;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #45a049;
-}
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:hover {
-    background-color: #ddd;
-}
-
 .error-message {
     color: red;
+}
+.site-footer
+{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 999;
+    background-color:#26272b;
+    padding:45px 0 20px;
+    font-size:15px;
+    line-height:24px;
+    color:#737373;
+}
+.site-footer hr
+{
+    border-top-color:#bbb;
+    opacity:0.5
+}
+.site-footer hr.small
+{
+    margin:20px 0
+}
+.site-footer h6
+{
+    color:#fff;
+    font-size:16px;
+    text-transform:uppercase;
+    margin-top:5px;
+    letter-spacing:2px
+}
+.site-footer a
+{
+    color:#737373;
+}
+.site-footer a:hover
+{
+    color:#3366cc;
+    text-decoration:none;
+}
+.card-shadow{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+input{
+    border-radius: 50px !important;
 }

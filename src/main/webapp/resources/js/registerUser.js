@@ -71,7 +71,8 @@ $(document).ready(function() {
         $(target).modal('show');
     });
     var currentURL = window.location.href;
-    if (currentURL.split("/")[3] === "login") {
+    console.log(currentURL.split("/"))
+    if (currentURL.split("/")[3] === "login" || currentURL.split("/")[3] === "login?logout=true"){
         $("#header-link").hide();
     } else {
         $("#header-link").show();
