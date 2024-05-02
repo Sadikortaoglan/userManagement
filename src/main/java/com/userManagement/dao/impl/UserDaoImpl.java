@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -54,6 +55,18 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             //LOGGER.error("getUsersExp: ", e);
             return Collections.emptyList();
+        }
+    }
+    @Override
+    public UserDetails getByUserName(String username) {
+        try{
+            Session session = sessionFactory.getCurrentSession();
+            Query<UserDetails> query = session.createQuery("FROM UserModel WHERE userName = :username", UserDetails.class);
+            query.setParameter("username", username);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            // Log the exception or handle it according to your application's requirements
+            return null;
         }
     }
 

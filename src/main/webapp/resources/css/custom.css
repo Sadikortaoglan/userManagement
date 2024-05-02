@@ -87,7 +87,6 @@ body {
     margin-top: 10px;
 }
 
-/* Eklenen stiller */
 .login-container:before {
     content: "";
     display: block;
@@ -109,7 +108,7 @@ body {
 .navbar {
     background-color: #333;
     color: #fff;
-    padding: 10px 20px;
+    padding: 1% 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -139,27 +138,6 @@ body {
 .navbar ul li a:hover {
     text-decoration: underline;
 }
-/* Tablo stilleri */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-/* Buton stilleri */
 .button {
     display: inline-block;
     padding: 8px 16px;
@@ -174,4 +152,31 @@ tr:nth-child(even) {
 
 .button:hover {
     background-color: #45a049;
+}
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.error-message {
+    color: red;
 }

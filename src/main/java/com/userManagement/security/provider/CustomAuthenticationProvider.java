@@ -6,19 +6,16 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Set;
-
-@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -26,15 +23,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
 
         UserDetails userDetails = userService.getByUserName(username);
-        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ROLE_USER");
-        return new UsernamePasswordAuthenticationToken(
-                "sadik", "12345", Set.of(grantedAuthority));
-       /* if (userDetails != null && userDetails.getPassword().equals(password)) {
-
+        //TODO passwordEncoder.matches(password, userDetails.getPassword()) password db şifreledikten sonra değiştir
+        if (userDetails != null && userDetails.getPassword().equals(password)) {
+            return new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
         } else {
-            throw new UsernameNotFoundException("User not found or password incorrect.");
-        }*/
+            throw new AuthenticationException("User not found or password incorrect.") {};
+        }
     }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);

@@ -6,6 +6,7 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,12 @@ public class UserController {
         model.addAttribute("title", "title");
         model.addAttribute("userList", userService.getAllActiveUsers());
         return "userList";
+    }
+    @RequestMapping(value = { "/registerUser" }, method = RequestMethod.GET)
+    public String newUser(ModelMap model) {
+        UserData user = new UserData();
+        model.addAttribute("user", user);
+        return "registerUser";
     }
     @PostMapping(value = "/registerUser")
     public String saveUser(@ModelAttribute UserData userData, BindingResult result, Model model) {

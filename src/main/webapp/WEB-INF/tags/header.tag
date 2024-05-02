@@ -6,11 +6,12 @@
 <header class="navbar">
     <div class="logo">User Management</div>
     <nav>
-        <ul>
-            <li><a href="#">Add User</a></li>
-            <li><a href="#">Delete User</a></li>
-            <li><a href="#">All Users</a></li>
-        </ul>
+        <sec:authorize access="hasAuthority('ADMIN_ROLE')">
+            <ul>
+                <li><a href="<c:url value='/newuser' />">Add New User</a></li>
+            </ul>
+        </sec:authorize>
+
     </nav>
 </header>
     <tags:css />

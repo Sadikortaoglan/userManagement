@@ -4,43 +4,51 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<c:choose>
-    <c:when test="${not empty users and users.size() > 0}">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Adı</th>
-                <th>Soyadı</th>
-                <th>Email</th>
-                <th>telefon</th>
-                <th>passwd</th>
-                <th>Doğum Tarihi</th>
-                <sec:authorize access="hasAuthority('ROLE_ADMIN')">
-                    <th></th>
-                </sec:authorize>
-            </tr>
-            <c:forEach items="${users}" var="user" varStatus="index">
+<head>
+    <tags:header/>
+</head>
+<body>
+<div id="table-container">
+    <c:choose>
+        <c:when test="${not empty userList and userList.size() > 0}">
+            <table>
+                <thead>
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.userName}</td>
-                    <td>${user.lastName}</td>
-                    <td>${user.email}</td>
-                    <td>${user.phone}</td>
-                    <td>${user.passwd}</td>
-                    <td>${user.birthDate}</td>
+                    <th>ID</th>
+                    <th>Adı</th>
+                    <th>Soyadı</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>Şifre</th>
+                    <th>Doğum Tarihi</th>
                     <sec:authorize access="hasAuthority('ROLE_ADMIN')">
-                        <th><a class="btn btn-primary" href="${saveUrl}?id=${user.id}">Güncelle</a>
-                            <span>&nbsp;</span>
-                            <a class="btn btn-secondary" href="#" onclick="return removeUser(${user.id})">Sil</a></th>
+                        <th></th>
                     </sec:authorize>
                 </tr>
-            </c:forEach>
-        </table>
-    </c:when>
-    <c:otherwise>
-        <table>
-            <tr>Kullanıcı Bulunamadı...</tr>
-        </table>
-    </c:otherwise>
-</c:choose>
+                </thead>
+                <tbody>
+                <c:forEach items="${userList}" var="user">
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.userName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.phone}</td>
+                        <td>${user.passwd}</td>
+                        <td>${user.birthDate}</td>
+                        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+                            <th><a class="btn btn-primary" href="${saveUrl}?id=${user.id}">Güncelle</a>
+                                <span>&nbsp;</span>
+                                <a class="btn btn-secondary" href="#" onclick="return removeUser(${user.id})">Sil</a></th>
+                        </sec:authorize>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:when>
+        <c:otherwise>
+            <p class="error-message">Kullanıcı Bulunamadı...</p>
+        </c:otherwise>
+    </c:choose>
+</div>
+</body>
