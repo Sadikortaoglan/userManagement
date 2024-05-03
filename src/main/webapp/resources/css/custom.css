@@ -76,3 +76,15 @@ body {
 input{
     border-radius: 50px !important;
 }
+.message {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}

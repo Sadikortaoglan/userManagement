@@ -2,6 +2,7 @@ package com.userManagement.controllers;
 
 import com.userManagement.data.ResultData;
 import com.userManagement.data.UserData;
+import com.userManagement.models.UserModel;
 import com.userManagement.services.UserService;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -33,8 +34,7 @@ public class UserController {
         model.addAttribute("userList", userService.getAllActiveUsers());
         return "userList";
     }
-    @RequestMapping(value = "/registerUser")
-    @GetMapping
+    @GetMapping(value = "/registerUser")
     public String newUser(ModelMap model) {
         UserData user = new UserData();
         model.addAttribute("user", user);
@@ -76,6 +76,12 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/checkUserNameAvailability")
+    @ResponseBody
+    public boolean checkUserNameAvailability(@RequestParam String userName) {
+        UserModel userModel = (UserModel) userService.getByUserName(userName);
+        return userModel != null;
     }
 
     private String getRedirectUrl(boolean hasError, String userId) {

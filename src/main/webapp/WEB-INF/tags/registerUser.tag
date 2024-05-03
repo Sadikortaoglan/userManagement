@@ -20,8 +20,9 @@
                 <div>
                     <label for="userName">User Name</label>
                 </div>
-                <div><input class="form-control" type="text" id="userName" name="userName" value="${userName}" placeholder="User Name"
+                <div><input class="form-control" type="text" id="userName" name="userName" value="${userName}" placeholder="User Name" oninput="checkUserNameAvailability()"
                             required></div>
+                <div id="userNameAvailabilityMessage" class="message"></div>
             </div>
             <div class="col-6">
                 <div>

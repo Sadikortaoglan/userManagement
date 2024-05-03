@@ -21,14 +21,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-//            request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME", request.getParameter(USERNAME));
-//            session.setAttribute(USERNAME, authentication.getName());
-//            session.setAttribute("authorities", authentication.getAuthorities());
-//            session.setAttribute("currentUser", "");
-//        }
         redirectStrategy.sendRedirect(request, response, getTargetUrl());
     }
 

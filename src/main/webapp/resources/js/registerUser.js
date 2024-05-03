@@ -21,6 +21,14 @@ function deleteUser(userId) {
     });
     return false;
 }
+function deleteUserWithModal(userId) {
+    deleteUserId = userId;
+    $('#deleteUserModal').modal('show');
+}
+$('#confirmDeleteBtn').click(function() {
+    deleteUser(deleteUserId);
+    $('#deleteUserModal').modal('hide');
+});
 function populateUpdateModal(userId) {
     $.ajax({
         method: "GET",
@@ -41,13 +49,15 @@ function populateUpdateModal(userId) {
 }
 function submitUpdateForm() {
     var formData = {
-        id: $('#userId').val(),
-        userName: $('#userName').val(),
-        lastName: $('#lastName').val(),
-        email: $('#email').val(),
-        phone: $('#phone').val(),
-        passwd: $('#passwd').val(),
-        birthDate: $('#birthDate').val()
+        id: $('#userId').val() || null,
+        userName: $('#userName').val() || null,
+        lastName: $('#lastName').val() || null,
+        email: $('#email').val() || null,
+        phone: $('#phone').val() || null,
+        passwd: $('#passwd').val() || null,
+        birthDate: $('#birthDate').val() || null,
+        admin: null,
+        roles: null
     };
     $.ajax({
         type: "POST",
@@ -63,6 +73,28 @@ function submitUpdateForm() {
             alert("Güncelleme işlemi sırasında bir hata oluştu.");
         }
     });
+}
+function checkUserNameAvailability() {
+    var userName = $('#userName').val().trim();
+    if (userName.length >= 3) {
+        $.ajax({
+            type: "GET",
+            url: API_URL + "/checkUserNameAvailability?userName=" + userName,
+            success: function (response) {
+                if (response) {
+                    $('#userNameAvailabilityMessage').text("Bu kullanıcı adı zaten kullanılıyor.").removeClass('success').addClass('error');
+                } else {
+                    $('#userNameAvailabilityMessage').text("Bu kullanıcı adı kullanılabilir.").removeClass('error').addClass('success');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                $('#userNameAvailabilityMessage').text("Kullanıcı adı durumu kontrol edilemedi.").removeClass('success').addClass('error');
+            }
+        });
+    } else {
+        $('#userNameAvailabilityMessage').text("").removeClass('success').addClass('error');
+    }
 }
 
 $(document).ready(function() {

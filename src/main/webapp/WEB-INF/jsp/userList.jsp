@@ -40,7 +40,7 @@
                                 <th>
                                     <a class="btn btn-outline-primary" href="#" id="updateBtn${user.id}" data-toggle="modal" data-target="#updateModal${user.id}" onclick="populateUpdateModal(${user.id})"><i class="bi bi-pencil"></i></a>
                                     <span>&nbsp;</span>
-                                    <a class="btn btn-outline-danger" href="#" onclick="return deleteUser(${user.id})"><i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-danger" href="#" onclick="deleteUserWithModal(${user.id})"><i class="bi bi-trash"></i></a>
                                 </th>
                             </sec:authorize>
                         </tr>
@@ -49,9 +49,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="updateModalLabel${user.id}">Kullanıcı Güncelleme</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form id="updateForm">
@@ -83,7 +81,6 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" onclick="submitUpdateForm()">Save</button>
                                     </div>
                                 </div>
@@ -111,8 +108,23 @@
             <div class="modal-body">
                 Kayıt başarıyla silindi.
             </div>
+        </div>
+    </div>
+</div>
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kullanıcıyı Sil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kullanıcıyı silmek istediğinizden emin misiniz?</p>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteBtn" onclick="deleteUser(deleteUserId)">Sil</button>
             </div>
         </div>
     </div>

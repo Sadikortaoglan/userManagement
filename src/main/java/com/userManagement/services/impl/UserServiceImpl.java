@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,6 @@ public class UserServiceImpl implements UserService {
         }
         return userDao.save(userModel);
     }
-
     private UserModel getUserModel(UserData userData) {
         UserModel userModel;
         if (StringUtils.hasText(userData.getId())) {
@@ -45,7 +43,6 @@ public class UserServiceImpl implements UserService {
         }
         return userModel;
     }
-
     @Override
     public boolean deleteUser(String userId) {
         UserModel existingUser = userDao.findById(userId);
@@ -65,13 +62,10 @@ public class UserServiceImpl implements UserService {
                 .map(userModel -> modelMapper.map(userModel, UserData.class))
                 .collect(Collectors.toList());
     }
-
     @Override
     public UserDetails getByUserName(String username) {
         return userDao.getByUserName(username);
     }
-
-
     @Override
     public UserData findById(String id) {
         UserModel user= userDao.findById(id);
