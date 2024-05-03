@@ -1,10 +1,9 @@
-package com.userManagement.controllers;
+package com.usermanagement.controllers;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/login")
@@ -14,7 +13,6 @@ public class LoginController {
 
     @GetMapping()
     public String showLoginPage() {
-        //LOGGER.debug("Rendering login page.");
         return VIEW_NAME_LOGIN_PAGE;
     }
 }

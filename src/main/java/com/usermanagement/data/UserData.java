@@ -1,38 +1,34 @@
-package com.userManagement.data;
+package com.usermanagement.data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 public class UserData implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String id;
     private String userName;
+    private String name;
     private String lastName;
     private String email;
     private String phone;
     private String passwd;
     private String birthDate;
-    private boolean admin;
-    private List<String> roles;
+    private boolean isAdmin;
 
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
-
     public void setAdmin(boolean admin) {
-        this.admin = admin;
+        isAdmin = admin;
+    }
+    public String getName() {
+        return name;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
     public String getId() {
         return id;
     }

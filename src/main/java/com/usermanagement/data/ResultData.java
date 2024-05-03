@@ -1,4 +1,4 @@
-package com.userManagement.data;
+package com.usermanagement.data;
 
 public class ResultData {
     private String message;

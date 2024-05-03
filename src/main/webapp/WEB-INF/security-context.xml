@@ -9,8 +9,7 @@
 		http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.userManagement"/>
-<!--    <bean id="userService" class="com.userManagement.services.impl.UserServiceImpl"/>-->
+    <context:component-scan base-package="com.usermanagement"/>
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <security:authentication-manager>
@@ -23,7 +22,7 @@
         <security:access-denied-handler error-page="/login"/>
         <security:intercept-url pattern="/login" access="permitAll()"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
-        <security:intercept-url pattern="/**" requires-channel="any" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
 
         <security:form-login login-page='/login'
                              login-processing-url="/spring_security_check"
@@ -38,19 +37,19 @@
     </security:http>
 
     <bean id="customAuthenticationSuccessHandler"
-          class="com.userManagement.security.handler.CustomAuthenticationSuccessHandler">
+          class="com.usermanagement.security.handler.CustomAuthenticationSuccessHandler">
         <property name="targetUrl" value="/user"/>
 
     </bean>
 
     <bean id="customAuthenticationFailureHandler"
-          class="com.userManagement.security.handler.CustomAuthenticationFailureHandler">
+          class="com.usermanagement.security.handler.CustomAuthenticationFailureHandler">
         <property name="failureUrl" value="/login?error=true"/>
     </bean>
 
     <bean id="redirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"/>
 
         <bean id="customAuthenticationProvider"
-              class="com.userManagement.security.provider.CustomAuthenticationProvider">
+              class="com.usermanagement.security.provider.CustomAuthenticationProvider">
         </bean>
 </beans>

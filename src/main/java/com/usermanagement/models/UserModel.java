@@ -1,42 +1,48 @@
-package com.userManagement.models;
+package com.usermanagement.models;
 
-import com.userManagement.models.enums.UserRole;
+import com.usermanagement.models.enums.UserRole;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class UserModel implements Serializable, UserDetails {
+public class UserModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String userName;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String phone;
+    @Column(length = 15,nullable = false)
     private String passwd;
+    @Column(nullable = false)
     private String birthDate;
     private boolean isDeleted;
-    @ElementCollection(targetClass = UserRole.class)
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Set<UserRole> roles = new HashSet<>();
+    private UserRole role;
 
-    public void addRole(UserRole role) {
-        roles.add(role);
+    public Long getId() {
+        return id;
     }
-    public void removeRole(UserRole role) {
-        roles.remove(role);
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -45,6 +51,14 @@ public class UserModel implements Serializable, UserDetails {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {
@@ -95,57 +109,11 @@ public class UserModel implements Serializable, UserDetails {
         isDeleted = deleted;
     }
 
-    public Long getId() {
-        return id;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        for (UserRole role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.toString()));
-        }
-        return authorities;
-    }
-    @Override
-    public String getPassword() {
-        return this.passwd;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.userName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
-    public Set<UserRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

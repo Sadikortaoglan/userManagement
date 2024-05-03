@@ -1,7 +1,7 @@
-package com.userManagement.services;
+package com.usermanagement.services;
 
-import com.userManagement.data.UserData;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.usermanagement.data.UserData;
+import com.usermanagement.models.UserModel;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ public interface UserService {
     boolean deleteUser(String userId);
     UserData findById(String id);
     List<UserData> getAllActiveUsers();
-    UserDetails getByUserName(String parameter);
+    UserModel getByUserName(String parameter);
 }

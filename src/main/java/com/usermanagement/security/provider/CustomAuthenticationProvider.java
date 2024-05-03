@@ -1,14 +1,19 @@
-package com.userManagement.security.provider;
+package com.usermanagement.security.provider;
 
-import com.userManagement.services.UserService;
+import com.usermanagement.models.UserModel;
+import com.usermanagement.services.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -23,11 +28,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        UserDetails userDetails = userService.getByUserName(username);
+        UserModel userModel = userService.getByUserName(username);
+        GrantedAuthority authority =new SimpleGrantedAuthority(userModel.getRole().toString());
+         User user = new User(userModel.getUsername(),userModel.getPassword(), Set.of(authority));
         //TODO passwordEncoder.matches(password, userDetails.getPassword()) password db şifreledikten sonra değiştir
-        if (userDetails != null && userDetails.getPassword().equals(password)) {
+        if (user.getPassword().equals(password)) {
             return new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+                    user, null, user.getAuthorities());
         } else {
             throw new UsernameNotFoundException("User not found or password incorrect.") {};
         }

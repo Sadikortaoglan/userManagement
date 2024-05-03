@@ -1,19 +1,20 @@
-package com.userManagement.services.impl;
+package com.usermanagement.services.impl;
 
-import com.userManagement.dao.UserDao;
-import com.userManagement.data.UserData;
-import com.userManagement.models.UserModel;
-import com.userManagement.services.UserService;
+import com.usermanagement.dao.UserDao;
+import com.usermanagement.data.UserData;
+import com.usermanagement.models.UserModel;
+import com.usermanagement.models.enums.UserRole;
+import com.usermanagement.services.UserService;
 import jakarta.annotation.Resource;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,10 +28,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean saveUser(UserData userData) {
         UserModel userModel = getUserModel(userData);
-        if(userModel == null){
-            LOGGER.error("saveUserExp: User cannot be null.");
-            return false;
-        }
         return userDao.save(userModel);
     }
     private UserModel getUserModel(UserData userData) {
@@ -41,6 +38,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userModel = modelMapper.map(userData, UserModel.class);
         }
+        userModel.setRole(userData.isAdmin() ? UserRole.ADMIN_ROLE : UserRole.USER_ROLE);
         return userModel;
     }
     @Override
@@ -59,17 +57,18 @@ public class UserServiceImpl implements UserService {
     public List<UserData> getAllActiveUsers() {
         List<UserModel> users = userDao.getAllActiveUsers();
         return users.stream()
-                .map(userModel -> modelMapper.map(userModel, UserData.class))
-                .collect(Collectors.toList());
+                .map(userModel -> modelMapper.map(userModel, UserData.class)).toList();
     }
     @Override
-    public UserDetails getByUserName(String username) {
+    public UserModel getByUserName(String username) {
         return userDao.getByUserName(username);
+
     }
     @Override
     public UserData findById(String id) {
         UserModel user= userDao.findById(id);
         UserData userData=modelMapper.map(user, UserData.class);
+        userData.setAdmin(user.getRole().equals(UserRole.ADMIN_ROLE));
         return userData;
     }
 }

@@ -36,11 +36,13 @@ function populateUpdateModal(userId) {
         success: function (response) {
             $('#updateModal').modal('show');
             $('#userName').val(response.userName);
+            $('#name').val(response.name);
             $('#lastName').val(response.lastName);
             $('#email').val(response.email);
             $('#phone').val(response.phone);
             $('#passwd').val(response.passwd);
             $('#birthDate').val(response.birthDate);
+            $('#isAdmin').prop("checked",response.admin)
         },
         error: function (result) {
             console.log(result.message);
@@ -51,17 +53,17 @@ function submitUpdateForm() {
     var formData = {
         id: $('#userId').val() || null,
         userName: $('#userName').val() || null,
+        name: $('#name').val() || null,
         lastName: $('#lastName').val() || null,
         email: $('#email').val() || null,
         phone: $('#phone').val() || null,
         passwd: $('#passwd').val() || null,
         birthDate: $('#birthDate').val() || null,
-        admin: null,
-        roles: null
+        admin: $('#isAdmin').prop("checked"),
     };
     $.ajax({
-        type: "POST",
-        url: API_URL +"/registerUser",
+        type: "PUT",
+        url: API_URL +"/updateUser",
         contentType: 'application/json',
         data: JSON.stringify(formData),
         success: function(response) {

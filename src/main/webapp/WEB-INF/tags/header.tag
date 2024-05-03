@@ -15,7 +15,7 @@
                     İşlemler
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<c:url value='user/registerUser' />">
+                    <li><a class="dropdown-item" href="user/registerUser">
                         <div class="d-flex gap-2 align-items-center">
                         <div>
                             <i class="bi bi-person-add mr-1"></i>
@@ -25,7 +25,7 @@
                      </div>
                         </div>
                     </a></li>
-                    <li><a class="dropdown-item"href="<c:url value='/user' />">
+                    <li><a class="dropdown-item" href="<c:url value='/user' />">
                         <div class="d-flex gap-2 align-items-center">
                             <div>
                                 <i class="bi bi-card-list mr-1"></i>
