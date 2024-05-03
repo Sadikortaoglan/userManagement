@@ -73,7 +73,7 @@
             </div>
 
         </div>
-        <div class="d-flex gap-2 col-12 mb-5">
+        <div class="d-flex gap-2 col-12 mb-3">
             <div class="col-6">
                 <div>
                     <label for="birthDate">Birth Date</label>
@@ -82,11 +82,14 @@
                     <input class="form-control" type="text" id="birthDate" name="birthDate" value="${birthDate}" placeholder="Birth Date" required>
                 </div>
             </div>
+            <div class="col-6 p-4 ml-x15">
+                <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
+                    <label for="isAdmin">Admin</label>
+                    <input id="isAdmin" type="checkbox">
+                </sec:authorize>
+            </div>
         </div>
-        <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
-            <label for="isAdmin">Admin</label>
-            <input id="isAdmin" type="checkbox">
-        </sec:authorize>
+
 <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary" id="submit-btn">Kaydet</button>
 </div>

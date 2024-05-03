@@ -30,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserModel userModel = userService.getByUserName(username);
         GrantedAuthority authority =new SimpleGrantedAuthority(userModel.getRole().toString());
-         User user = new User(userModel.getUsername(),userModel.getPassword(), Set.of(authority));
+         User user = new User(userModel.getUserName(),userModel.getPasswd(), Set.of(authority));
         //TODO passwordEncoder.matches(password, userDetails.getPassword()) password db şifreledikten sonra değiştir
         if (user.getPassword().equals(password)) {
             return new UsernamePasswordAuthenticationToken(

@@ -93,14 +93,21 @@
                         <label for="passwd">Password</label>
                         <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password" required>
                     </div>
-                    <div class="form-group">
-                        <label for="birthDate">Birth Date</label>
-                        <input type="text" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date" required>
+                    <div class="d-flex w-100 ">
+                        <div class="form-group col-9">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="text" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date" required>
+                        </div>
+
+                        <div class="col-3 p-4 ml-x15">
+                            <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
+                                <label for="isAdmin">Admin</label>
+                                <input id="isAdmin" type="checkbox">
+                            </sec:authorize>
+                        </div>
+
                     </div>
-                    <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
-                        <label for="isAdmin">Admin</label>
-                        <input id="isAdmin" type="checkbox">
-                    </sec:authorize>
+
                 </form>
             </div>
             <div class="modal-footer">
