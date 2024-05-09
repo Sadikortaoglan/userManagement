@@ -1,12 +1,11 @@
 package com.usermanagement.data;
 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 public class UserData implements Serializable {
     @Serial
@@ -22,15 +21,15 @@ public class UserData implements Serializable {
     @Size(min = 3,max = 50)
     private String lastName;
     @NotNull
-    @Size(min = 3,max = 50)
+    @Email
     private String email;
     @NotNull
     private String phone;
     @NotNull
     @Size(min = 3,max = 10)
     private String passwd;
-    @Column
-    private Date birthDate;
+    @NotNull
+    private String birthDate;
     private boolean isAdmin;
 
     public boolean isAdmin() {
@@ -94,11 +93,11 @@ public class UserData implements Serializable {
         this.passwd = passwd;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 }

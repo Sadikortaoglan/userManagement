@@ -6,12 +6,15 @@ import com.usermanagement.models.UserModel;
 import com.usermanagement.models.enums.UserRole;
 import com.usermanagement.services.UserService;
 import jakarta.annotation.Resource;
-import org.modelmapper.ModelMapper;
+import org.modelmapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
     private UserModel getUserModel(UserData userData) {
         UserModel userModel;
+        dateFormat();
         if (StringUtils.hasText(userData.getId())) {
             userModel = userDao.findById(userData.getId());
             modelMapper.map(userData, userModel);
@@ -69,4 +73,26 @@ public class UserServiceImpl implements UserService {
         userData.setAdmin(user.getRole().equals(UserRole.ADMIN_ROLE));
         return userData;
     }
+
+    Provider<Date> localDateProvider = new AbstractProvider<Date>() {
+        @Override
+        public Date get() {
+            return new Date();
+        }
+    };
+    protected void dateFormat(){
+        modelMapper.addConverter(toStringDate);
+        modelMapper.getTypeMap(String.class, Date.class).setProvider(localDateProvider);
+    }
+    Converter<String, Date> toStringDate = new AbstractConverter<String, Date>() {
+        @Override
+        protected Date convert(String source) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                return simpleDateFormat.parse(source);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 }

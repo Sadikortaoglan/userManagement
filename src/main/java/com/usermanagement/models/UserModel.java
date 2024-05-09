@@ -21,9 +21,10 @@ public class UserModel implements Serializable {
     private Long id;
     @NotNull
     @Column(unique = true)
+    @Size(min = 3,max = 15)
     private String userName;
     @NotNull
-    @Size(min = 3, max = 10)
+    @Size(min = 3,max = 15)
     @Column(nullable = false)
     private String name;
     @NotNull

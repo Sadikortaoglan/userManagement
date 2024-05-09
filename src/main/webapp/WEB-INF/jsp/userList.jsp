@@ -75,26 +75,33 @@
                     <div class="form-group">
                         <label for="userName">User Name:</label>
                         <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" required>
+                        <div id="userNameError" class="text-danger"></div>
+
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="lastName" placeholder="Name" required>
+                        <div id="nameError" class="text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="text" class="form-control" id="lastName" name="lastName"  placeholder="Last Name" required>
+                        <div id="lastNameError" class="text-danger field-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        <div id="emailError" class="text-danger field-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+                        <div id="phoneError" class="text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label for="passwd">Password</label>
                         <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password" required>
+                        <div id="passwdError" class="text-danger field-error"></div>
                     </div>
                     <div class="d-flex w-100 ">
                         <div class="form-group col-9">
@@ -122,6 +129,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
                 <button type="button" class="btn btn-primary" onclick="submitUpdateForm()">Save</button>
             </div>
         </div>
@@ -155,6 +163,19 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteBtn" onclick="deleteUser(deleteUserId)">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalLabel">Başarılı!</h5>
+            </div>
+            <div class="modal-body">
+                Kayıt başarıyla güncellendi.
             </div>
         </div>
     </div>

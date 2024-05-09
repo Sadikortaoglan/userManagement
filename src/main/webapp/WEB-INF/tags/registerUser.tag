@@ -15,6 +15,7 @@
 <%@ attribute name="birthDate" type="java.util.Date" description="Birth Date" %>
 <tags:header/>
 <c:set var="registerUrl" value="/user/registerUser"/>
+<c:set var="userList" value="/user"/>
 <div class="container card card-shadow mt-5 p-5 w-50" >
     <form id="registerForm" method="post" name="registerForm" action="${registerUrl}">
         <div class="d-flex gap-2 col-12 mb-2">
@@ -25,6 +26,7 @@
                 <div><input class="form-control" type="text" id="userName" name="userName" value="${userName}" placeholder="User Name" oninput="checkUserNameAvailability()"
                             required></div>
                 <div id="userNameAvailabilityMessage" class="message"></div>
+                <div id="userNameError" class="text-danger"></div>
             </div>
             <div class="col-6">
                 <div>
@@ -32,6 +34,7 @@
                 </div>
                 <div>
                     <input class="form-control" type="text" id="name" name="name" value="${name}" placeholder="Name" required>
+                    <div id="nameError" class="text-danger"></div>
                 </div>
             </div>
 
@@ -43,6 +46,7 @@
                 </div>
                 <div>
                     <input class="form-control" type="text" id="lastName" name="lastName" value="${lastName}" placeholder="Last Name" required>
+                    <div id="lastNameError" class="text-danger"></div>
                 </div>
             </div>
 
@@ -52,6 +56,7 @@
                 </div>
                 <div>
                     <input class="form-control" type="text" id="phone" name="phone" value="${phone}" placeholder="Phone" required>
+                    <div id="phoneError" class="text-danger"></div>
                 </div>
             </div>
         </div>
@@ -60,8 +65,9 @@
                 <div>
                     <label for="email">Email</label>
                 </div>
-                <div><input class="form-control" type="email" id="email" name="email" value="${email}" placeholder="Email" required></div>
-
+                <div><input class="form-control" type="email" id="email" name="email" value="${email}" placeholder="Email" required>
+                    <div id="emailError" class="text-danger"></div>
+                </div>
             </div>
             <div class="col-6">
                 <div>
@@ -69,6 +75,7 @@
                 </div>
                 <div>
                     <input class="form-control" type="password" id="passwd" name="passwd" value="${passwd}" placeholder="Password" required>
+                    <div id="passwdError" class="text-danger"></div>
                 </div>
             </div>
 
@@ -96,6 +103,7 @@
         </div>
 
 <div class="d-flex justify-content-end">
+    <a href="${userList}" class="btn btn-danger btn-lg" role="button">İptal</a>&nbsp;
     <button type="submit" class="btn btn-primary" id="submit-btn">Kaydet</button>
 </div>
     </form>

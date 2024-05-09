@@ -44,19 +44,29 @@ function populateUpdateModal(userId) {
             $('#phone').val(response.phone);
             $('#passwd').val(response.passwd);
             $('#isAdmin').prop("checked",response.admin)
-            var birthDate = new Date(response.birthDate);
-            var day = ("0" + birthDate.getDate()).slice(-2);
-            var month = ("0" + (birthDate.getMonth() + 1)).slice(-2);
-            var year = birthDate.getFullYear();
-            var formattedDate = year + "-" + month + "-" + day;
-            $('#birthDate').val(formattedDate);
+            $('#birthDate').val(getFormattedDate(response.birthDate));
         },
         error: function (result) {
             console.log(result.message);
         }
     });
 }
+function getFormattedDate(timestamp) {
+    var date = new Date(timestamp);
+    var dateMonth = date.getMonth() + 1;
+    var dateDay = date.getDate();
+    if (dateMonth < 10) {
+        dateMonth = '0' + dateMonth.toString();
+    }
+    if (dateDay < 10) {
+        dateDay = '0' + dateDay.toString();
+    }
+    return  dateDay + "/" + dateMonth + "/" + date.getFullYear()
+}
 function submitUpdateForm() {
+    if (!validateForm()) {
+        return;
+    }
     var formData = {
         id: $('#userId').val() || null,
         userName: $('#userName').val() || null,
@@ -75,7 +85,11 @@ function submitUpdateForm() {
         data: JSON.stringify(formData),
         success: function(response) {
             $('#updateModal').modal('hide');
-            location.reload();
+            $('#updateUserModal').modal('show');
+            setTimeout(function() {
+                location.reload();
+
+            }, 1000);
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -85,7 +99,7 @@ function submitUpdateForm() {
 }
 function checkUserNameAvailability() {
     var userName = $('#userName').val().trim();
-    if (userName.length >= 3) {
+    if (userName.length >= 3 && !userName.includes(' ')) {
         $.ajax({
             type: "GET",
             url: API_URL + "/checkUserNameAvailability?userName=" + userName,
@@ -105,7 +119,6 @@ function checkUserNameAvailability() {
         $('#userNameAvailabilityMessage').text("").removeClass('success').addClass('error');
     }
 }
-
 $(document).ready(function() {
     $(document).on('click', '[id^="updateBtn"]', function() {
         var target = $(this).data('target');
@@ -118,12 +131,12 @@ $(document).ready(function() {
         var year = dateParts[0];
         var month = dateParts[1];
         var day = dateParts[2];
-        var formattedDate = year + "-" + month + "-" + day;
+        var formattedDate = day + "/" + month + "/" + year;
         $(this).text(formattedDate);
     });
 
 
-    $("#birthDate").datepicker({dateFormat: "dd-mm-yyyy"});
+    $("#birthDate").datepicker({dateFormat: "dd/MM/yyyy"});
     var currentURL = window.location.href;
     console.log(currentURL.split("/"))
     if (currentURL.split("/")[3] === "login" || currentURL.split("/")[3] === "login?logout=true"){
