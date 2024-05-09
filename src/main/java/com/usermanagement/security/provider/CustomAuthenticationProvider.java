@@ -20,8 +20,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Resource
     private UserService userService;
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -29,15 +27,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
 
         UserModel userModel = userService.getByUserName(username);
-        GrantedAuthority authority =new SimpleGrantedAuthority(userModel.getRole().toString());
-         User user = new User(userModel.getUserName(),userModel.getPasswd(), Set.of(authority));
-        //TODO passwordEncoder.matches(password, userDetails.getPassword()) password db şifreledikten sonra değiştir
-        if (user.getPassword().equals(password)) {
-            return new UsernamePasswordAuthenticationToken(
-                    user, null, user.getAuthorities());
-        } else {
-            throw new UsernameNotFoundException("User not found or password incorrect.") {};
+        if(userModel!=null){
+            GrantedAuthority authority =new SimpleGrantedAuthority(userModel.getRole().toString());
+            User user = new User(userModel.getUserName(),userModel.getPasswd(), Set.of(authority));
+            //TODO passwordEncoder.matches(password, userDetails.getPassword()) password db şifreledikten sonra burayı değiştir
+            if (user.getPassword().equals(password)) {
+                return new UsernamePasswordAuthenticationToken(
+                        user, null, user.getAuthorities());
+            }
         }
+        throw new UsernameNotFoundException("User not found or password incorrect.") {};
     }
 
     @Override

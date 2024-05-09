@@ -1,19 +1,36 @@
 package com.usermanagement.data;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserData implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String id;
+    @NotNull
+    @Size(min = 3,max = 15)
     private String userName;
+    @NotNull
+    @Size(min = 3,max = 15)
     private String name;
+    @NotNull
+    @Size(min = 3,max = 50)
     private String lastName;
+    @NotNull
+    @Size(min = 3,max = 50)
     private String email;
+    @NotNull
     private String phone;
+    @NotNull
+    @Size(min = 3,max = 10)
     private String passwd;
-    private String birthDate;
+    @Column
+    private Date birthDate;
     private boolean isAdmin;
 
     public boolean isAdmin() {
@@ -77,11 +94,11 @@ public class UserData implements Serializable {
         this.passwd = passwd;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 }

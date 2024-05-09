@@ -49,5 +49,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean id="modelMapper" class="org.modelmapper.ModelMapper"/>
+    <mvc:annotation-driven validator="validatorFactory" />
 
+    <bean id="validatorFactory" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 </beans>

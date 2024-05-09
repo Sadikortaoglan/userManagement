@@ -16,7 +16,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th hidden="">id</th>
+                        <th>User Id</th>
                         <th>User Name</th>
                         <th>Adı</th>
                         <th>Soyadı</th>
@@ -32,13 +32,13 @@
                     <tbody>
                     <c:forEach items="${userList}" var="user">
                         <tr>
-                            <td hidden="">${user.id}</td>
+                            <td>${user.id}</td>
                             <td>${user.userName}</td>
                             <td>${user.name}</td>
                             <td>${user.lastName}</td>
                             <td>${user.email}</td>
                             <td>${user.phone}</td>
-                            <td>${user.birthDate}</td>
+                            <td id="birthDateId">${user.birthDate }</td>
                             <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
                                 <th>
                                     <a class="btn btn-outline-primary" href="#" id="updateBtn${user.id}" data-toggle="modal" data-target="#updateModal" onclick="populateUpdateModal(${user.id})"><i class="bi bi-pencil"></i></a>
@@ -69,7 +69,10 @@
             <div class="modal-body">
                 <form id="updateForm">
                     <div class="form-group">
-                        <input type="hidden" id="userId" name="userId" value="" required>
+                        <label for="userId">User ID:</label>
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="User ID" required disabled>
+                     </div>
+                    <div class="form-group">
                         <label for="userName">User Name:</label>
                         <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" required>
                     </div>
@@ -95,19 +98,27 @@
                     </div>
                     <div class="d-flex w-100 ">
                         <div class="form-group col-9">
-                            <label for="birthDate">Birth Date</label>
-                            <input type="text" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date" required>
+                            <div>
+                                <label for="birthDate">Birth Date</label>
+                            </div>
+                            <div class="form-date">
+                                <div class="input-group date" id="datepicker">
+                                    <input type="text" class="form-control" id="birthDate" name="birthDate" value="${birthDate}" />
+                                    <span class="input-group-append">
+                                        <span class="input-group-text bg-light d-block">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-
                         <div class="col-3 p-4 ml-x15">
                             <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
                                 <label for="isAdmin">Admin</label>
                                 <input id="isAdmin" type="checkbox">
                             </sec:authorize>
                         </div>
-
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">

@@ -6,17 +6,17 @@
 
 
 <%@ tag description="Register User Form" pageEncoding="UTF-8" %>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ attribute name="userName" type="java.lang.String" description="User Name" %>
 <%@ attribute name="lastName" type="java.lang.String" description="Last Name" %>
 <%@ attribute name="email" type="java.lang.String" description="Email" %>
 <%@ attribute name="phone" type="java.lang.String" description="Phone" %>
 <%@ attribute name="passwd" type="java.lang.String" description="Password" %>
-<%@ attribute name="birthDate" type="java.lang.String" description="Birth Date" %>
+<%@ attribute name="birthDate" type="java.util.Date" description="Birth Date" %>
 <tags:header/>
 <c:set var="registerUrl" value="/user/registerUser"/>
 <div class="container card card-shadow mt-5 p-5 w-50" >
-    <form id="registerForm" method="post" name="userForm" action="${registerUrl}">
+    <form id="registerForm" method="post" name="registerForm" action="${registerUrl}">
         <div class="d-flex gap-2 col-12 mb-2">
             <div class="col-6">
                 <div>
@@ -78,15 +78,20 @@
                 <div>
                     <label for="birthDate">Birth Date</label>
                 </div>
-                <div>
-                    <input class="form-control" type="text" id="birthDate" name="birthDate" value="${birthDate}" placeholder="Birth Date" required>
+                <div class="form-date">
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control" id="birthDate" name="birthDate" value="${birthDate}" />
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="col-6 p-4 ml-x15">
-                <sec:authorize access="hasAnyAuthority('ADMIN_ROLE')">
-                    <label for="isAdmin">Admin</label>
-                    <input id="isAdmin" type="checkbox">
-                </sec:authorize>
+                <label for="isAdmin">Admin</label>
+                <input id="isAdmin" type="checkbox">
             </div>
         </div>
 

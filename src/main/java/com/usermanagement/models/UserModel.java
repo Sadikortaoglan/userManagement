@@ -2,12 +2,13 @@ package com.usermanagement.models;
 
 import com.usermanagement.models.enums.UserRole;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -18,21 +19,33 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @NotNull
+    @Column(unique = true)
     private String userName;
+    @NotNull
+    @Size(min = 3, max = 10)
     @Column(nullable = false)
     private String name;
+    @NotNull
+    @Size(min = 5, max = 50)
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Email
+    @NotNull
+    @Column
     private String email;
-    @Column(nullable = false)
+    @NotNull
+    @Column
     private String phone;
-    @Column(length = 15,nullable = false)
+    @NotNull
+    @Size(min = 3 , max = 10)
+    @Column
     private String passwd;
-    @Column(nullable = false)
-    private String birthDate;
+
+    @Column
+    private Date birthDate;
     private boolean isDeleted;
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
@@ -93,11 +106,11 @@ public class UserModel implements Serializable {
         this.passwd = passwd;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
