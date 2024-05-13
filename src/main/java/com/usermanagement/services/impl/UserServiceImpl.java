@@ -46,14 +46,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(String userId) {
         UserModel existingUser = userDao.findById(userId);
-        if (existingUser != null && existingUser.isDeleted()) {
+
+        if (existingUser == null)
             return false;
-        } else if (existingUser != null) {
-            existingUser.setDeleted(true);
-            return userDao.save(existingUser);
-        } else {
+
+        if (existingUser.isDeleted())
             return false;
-        }
+
+        existingUser.setDeleted(true);
+        return userDao.save(existingUser);
     }
     @Override
     public List<UserData> getAllActiveUsers() {
